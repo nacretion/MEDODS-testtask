@@ -1,0 +1,2 @@
+class ExternalApiController < ApplicationController
+end
