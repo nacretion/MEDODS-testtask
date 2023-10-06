@@ -1,11 +1,16 @@
 class ConsultationRequestsController < ApplicationController
   def create
-    @consultation_request = ConsultationRequest.new(consultation_request_params)
+    result = ConsultationRequestContract.new.call(consultation_request_params)
 
-    if @consultation_request.save
-      render json: @consultation_request, status: :created
+    if result.success?
+      @consultation_request = ConsultationRequest.new(result.to_h)
+      if @consultation_request.save
+        render json: @consultation_request, status: :created
+      else
+        render json: @consultation_request.errors, status: :unprocessable_entity
+      end
     else
-      render json: @consultation_request.errors, status: :unprocessable_entity
+      render json: result.errors.to_h, status: :unprocessable_entity
     end
   end
 
