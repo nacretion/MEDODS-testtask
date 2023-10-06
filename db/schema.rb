@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_06_151307) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_06_172308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "consultation_requests", force: :cascade do |t|
     t.bigint "patient_id", null: false
     t.string "text"
-    t.datetime "date_of_creation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_consultation_requests_on_patient_id"

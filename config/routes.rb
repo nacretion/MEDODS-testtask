@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :patients, only: [:index, :show, :create, :update, :destroy] do
+  resources :patients, only: [:create] do
     resources :recommendations, only: [:index], controller: 'recommendations'
   end
 
@@ -13,4 +13,5 @@ Rails.application.routes.draw do
 
   resources :external_api
   resources :notifications
+
 end
