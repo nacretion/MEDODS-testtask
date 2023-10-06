@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   resources :recommendations, only: [:index]
 
-  resources :external_api
+  get 'medications/search_drug', to: 'medications#search_drug'
+  get 'medications/search_by_reactionmeddrapt', to: 'medications#search_by_reactionmeddrapt'
   resources :notifications
 
 end
