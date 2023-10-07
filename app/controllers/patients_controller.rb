@@ -1,22 +1,29 @@
 class PatientsController < ApplicationController
   def create
-    result = PatientContract.new.call(patient_params)
+    @patient = Patient.new(patient_params)
 
-    if result.success?
-      @patient = Patient.new(result.to_h)
-      if @patient.save
-        render json: @patient, status: :created
-      else
-        render json: @patient.errors, status: :unprocessable_entity
-      end
+    if !patient_errors && @patient.save
+
+      render json: @patient, status: :created
     else
-      render json: result.errors.to_h, status: :unprocessable_entity
+      render json: { errors: 'Некорректные данные. ' + patient_errors }, status: :unprocessable_entity
     end
   end
 
   private
 
+
   def patient_params
     params.require(:patient).permit(:full_name, :date_of_birth, :phone_number, :email)
+  end
+
+  def patient_errors
+    if Patient.exists?(phone_number: @patient.phone_number, email: @patient.email)
+      "Номер или email уже существует"
+    elsif @patient.full_name.blank? || @patient.date_of_birth.blank? || @patient.phone_number.blank? || @patient.email.blank?
+      "Не передан какой-либо из параметров"
+    else
+      nil
+    end
   end
 end

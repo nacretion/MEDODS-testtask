@@ -1,4 +1,3 @@
-require_relative '../services/open_fda_api'
 class MedicationsController < ApplicationController
   def search_drug
     query = params[:query]
