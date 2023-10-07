@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :patients, only: [:create] do
+  resources :patients, only: [:create, :index] do
     resources :recommendations, only: [:index], controller: 'recommendations'
   end
 
-  resources :consultation_requests, only: [:create] do
+  resources :consultation_requests, only: [:create, :index] do
     resources :recommendations, only: [:create], controller: 'recommendations'
   end
 
