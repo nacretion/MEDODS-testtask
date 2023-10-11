@@ -26,10 +26,12 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
+RUN apt-get install --no-install-recommends -y libpq-dev
+
 FROM base
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libpq-dev postgresql postgresql-contrib libvips && \
+    apt-get install --no-install-recommends -y curl postgresql postgresql-contrib libvips && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 COPY --from=build /usr/local/bundle /usr/local/bundle
