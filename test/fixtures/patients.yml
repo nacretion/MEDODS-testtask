@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  full_name: MyString
-  date_of_birth: 2023-10-06
-  phone_number: MyString
-  email: MyString
+  full_name: "Иванов Иван Иванович"
+  date_of_birth: 2000-10-06
+  phone_number: +79088556666
+  email: some_email@gmail.com
 
 two:
-  full_name: MyString
-  date_of_birth: 2023-10-06
-  phone_number: MyString
-  email: MyString
+  full_name: "Петров Петр Петрович"
+  date_of_birth: 2000-01-06
+  phone_number: +79088556667
+  email: some_email2@gmail.com

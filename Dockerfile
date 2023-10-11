@@ -1,5 +1,5 @@
 ARG RUBY_VERSION=3.2.2
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+FROM ruby:$RUBY_VERSION-slim as base
 
 WORKDIR /rails
 
@@ -26,7 +26,6 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
-
 FROM base
 
 RUN apt-get update -qq && \
@@ -38,9 +37,9 @@ COPY --from=build /rails /rails
 
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
+
 USER rails:rails
 
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
 EXPOSE 3000
 CMD ["./bin/rails", "server"]

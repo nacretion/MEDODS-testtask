@@ -3,9 +3,7 @@
 one:
   patient: one
   text: MyString
-  date_of_creation: 2023-10-06 20:12:08
 
 two:
   patient: two
   text: MyString
-  date_of_creation: 2023-10-06 20:12:08
