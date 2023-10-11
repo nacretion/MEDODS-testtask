@@ -27,7 +27,8 @@ RUN chmod +x bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/* \
 
 RUN apt-get install --no-install-recommends -y libpq-dev
-RUN ARCHFLAGS="-arch x86_64" gem install pg
+RUN sudo env ARCHFLAGS="-arch i386" gem install pg
+
 
 FROM base
 
