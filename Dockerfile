@@ -11,7 +11,9 @@ ENV RAILS_ENV="production" \
 FROM base as build
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev
+
+RUN sudo env ARCHFLAGS="-arch i386" gem install pg
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
@@ -25,10 +27,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/* \
-
-RUN apt-get install --no-install-recommends -y libpq-dev
-RUN sudo env ARCHFLAGS="-arch i386" gem install pg
-
 
 FROM base
 
