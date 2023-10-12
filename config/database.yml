@@ -4,7 +4,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: medods
   password: root
-  host: postgres
+  host: db
   port: 5432
   timeout: 5000
 

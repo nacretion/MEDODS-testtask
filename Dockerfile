@@ -1,22 +1,16 @@
 FROM ruby:3.2.2
 
-RUN apt-get update -qq && apt-get install -y postgresql-client postgresql-contrib libpq-dev
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
 
-RUN mkdir /medods
-WORKDIR /medods
+RUN dockerize --version
+RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz
+RUN tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz
+RUN rm dockerize-linux-amd64-v0.6.1.tar.gz
+
+WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
+
 RUN bundle install
 
 COPY . .
-
-EXPOSE 3000
-
-RUN service postgresql start && \
-    su postgres -c "psql -c \"CREATE ROLE medods WITH LOGIN PASSWORD 'root';\"" && \
-    su postgres -c "psql -c 'ALTER ROLE medods CREATEDB;'" && \
-    su postgres -c "createdb -O medods myapp_development" && \
-    su postgres -c "createdb -O medods myapp_test" && \
-    service postgresql stop
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
