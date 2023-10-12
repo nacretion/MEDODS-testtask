@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "f5296c6d-051f-4dfa-a693-bf2098b28c14",
+		"name": "MEDODS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19982511"
+	},
+	"item": [
+		{
+			"name": "/patients",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patient\": {\r\n    \"full_name\": \"Козлов Михаил Андреевич\",\r\n    \"date_of_birth\": \"1988-12-04\",\r\n    \"phone_number\": \"+7 (555) 999-7777\",\r\n    \"email\": \"kozlov@example.com\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://medods.nacretion.space/patients"
+			},
+			"response": []
+		},
+		{
+			"name": "/patients",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient\": {\r\n        \"full_name\": \"Ананьев Никита\",\r\n        \"date_of_birth\": \"1990-01-01\",\r\n        \"phone_number\": \"+7 (908) 855-5760\",\r\n        \"email\": \"ananje7v.nikita2017@ya.ru\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://medods.nacretion.space/patients"
+			},
+			"response": []
+		},
+		{
+			"name": "/patients/:patient_id/recommendations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://medods.nacretion.space/patients/1/recommendations"
+			},
+			"response": []
+		},
+		{
+			"name": "/consultation_requests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://medods.nacretion.space/consultation_requests"
+			},
+			"response": []
+		},
+		{
+			"name": "/consultation_requests",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_id\": 1,\r\n    \"text\": \"Жалуюсь на боли\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://medods.nacretion.space/consultation_requests"
+			},
+			"response": []
+		},
+		{
+			"name": "/consultation_requests/:consultation_request_id/recommendations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"Лечитесь\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://medods.nacretion.space/consultation_requests/1/recommendations"
+			},
+			"response": []
+		},
+		{
+			"name": "/recommendations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://medods.nacretion.space/recommendations"
+			},
+			"response": []
+		},
+		{
+			"name": "/medications/search_by_reactionmeddrapt",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recommendation\": {\r\n    \"text\": \"Рекомендация для вашего запроса\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://medods.nacretion.space/medications/search_by_reactionmeddrapt?query=fatigue",
+					"protocol": "https",
+					"host": [
+						"medods",
+						"nacretion",
+						"space"
+					],
+					"path": [
+						"medications",
+						"search_by_reactionmeddrapt"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "fatigue"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/medications/search_drug",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://medods.nacretion.space/medications/search_drug?query=aspirin",
+					"protocol": "https",
+					"host": [
+						"medods",
+						"nacretion",
+						"space"
+					],
+					"path": [
+						"medications",
+						"search_drug"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "aspirin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
