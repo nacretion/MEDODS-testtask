@@ -1,47 +1,22 @@
-ARG RUBY_VERSION=3.2.2
-FROM ruby:$RUBY_VERSION-slim as base
+FROM ruby:3.2.2
 
-WORKDIR /rails
+RUN apt-get update -qq && apt-get install -y postgresql-client postgresql-contrib libpq-dev
 
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
-
-FROM base as build
-
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev
-
-RUN sudo env ARCHFLAGS="-arch i386" gem install pg
+RUN mkdir /medods
+WORKDIR /medods
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN bundle install
 
 COPY . .
 
-RUN bundle exec bootsnap precompile app/ lib/
-
-RUN chmod +x bin/* && \
-    sed -i "s/\r$//g" bin/* && \
-    sed -i 's/ruby\.exe$/ruby/' bin/* \
-
-FROM base
-
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl postgresql postgresql-contrib libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-
-USER rails:rails
-
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+
+RUN service postgresql start && \
+    su postgres -c "psql -c \"CREATE ROLE medods WITH LOGIN PASSWORD 'root';\"" && \
+    su postgres -c "psql -c 'ALTER ROLE medods CREATEDB;'" && \
+    su postgres -c "createdb -O medods myapp_development" && \
+    su postgres -c "createdb -O medods myapp_test" && \
+    service postgresql stop
+
+CMD ["rails", "server", "-b", "0.0.0.0"]
