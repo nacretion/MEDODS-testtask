@@ -33,6 +33,7 @@ Rails.application.configure do
     enable_starttls_auto: true,
   }
 
+  config.hosts << "medods.nacretion.space"
   config.active_storage.service = :local
 
   config.active_support.deprecation = :log

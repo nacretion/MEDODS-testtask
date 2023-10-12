@@ -15,6 +15,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
+  config.hosts << "medods.nacretion.space"
   config.action_dispatch.show_exceptions = :rescuable
 
   config.action_controller.allow_forgery_protection = false
