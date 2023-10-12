@@ -10,11 +10,22 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.force_ssl = true
-
+  config.hosts << "medods.nacretion.space"
   config.logger = ActiveSupport::Logger.new(STDOUT)
                                        .tap { |logger| logger.formatter = ::Logger::Formatter.new }
                                        .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
+  # Поменять если нужно. Протестить mailer можно воспользовавшись https://medods.nacreton.space/{ENDPOINT}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.example.com',
+    port: 587,
+    domain: 'domain',
+    user_name: 'example@domain.ru',
+    password: 'password',
+    authentication: :login,
+    enable_starttls_auto: true,
+  }
   config.log_tags = [:request_id]
 
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
